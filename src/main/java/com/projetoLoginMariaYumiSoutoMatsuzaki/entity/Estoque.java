@@ -1,0 +1,43 @@
+package com.projetoLoginMariaYumiSoutoMatsuzaki.entity;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "estoque")
+public class Estoque {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	@NotNull
+	@NotBlank
+	@Size(min = 2, max = 255)
+	private String localizacao;
+
+	@NotNull
+	private int quantidade;
+
+	@OneToOne
+	@JoinColumn(name = "id_produto", nullable = false) // Mapeia a coluna da chave estrangeira
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	private Produtos produto;
+
+}
